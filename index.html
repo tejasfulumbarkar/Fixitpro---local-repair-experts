@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixItPro Handyman Services - Book Your Repair</title>
+    <!-- Load Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #f8f9fa; /* Light background for the whole page */
+        }
+        /* Custom styles for the mobile success message box */
+        #success-message {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050; /* Ensure it floats above content */
+            transition: opacity 0.3s ease-in-out;
+            min-width: 250px;
+        }
+        /* Custom radio button styling for the survey to create a cleaner, clickable look */
+        .rating-label {
+            transition: all 0.15s ease-in-out;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid #ced4da;
+        }
+        input[type="radio"]:checked + .rating-label {
+            background-color: #0d6efd; /* Bootstrap primary blue */
+            color: white;
+            border-color: #0d6efd;
+        }
+        /* Hover effect for navigation links */
+        .nav-link.active, .hover-primary:hover {
+            color: #0d6efd !important;
+        }
+        /* Set all main content pages to flex/hidden initially */
+        .content-page {
+            display: none;
+        }
+        .content-page.active {
+            display: block;
+        }
+         
+        #contact-name::placeholder,
+        #contact-email::placeholder,
+        #contact-message::placeholder {
+            color: #6c757d; /* Bootstrap placeholder color */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Success Message Container (Hidden by default) -->
+    <div id="success-message" class="alert alert-success d-none shadow-lg opacity-0" role="alert">
+        Form submitted successfully! Check the console for data.
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow sticky-top">
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 fw-bold text-primary mb-0"><a href="#home" class="text-decoration-none text-primary" onclick="showPage('home')">FixItPro</a></h1>
+                <nav class="d-none d-md-flex">
+                    <a href="#home" class="text-secondary text-decoration-none me-3 hover-primary" onclick="showPage('home')">Home</a>
+                    <a href="#booking" class="text-secondary text-decoration-none me-3 hover-primary" onclick="showPage('home')">Book Service</a>
+                    <a href="#signup" class="text-secondary text-decoration-none me-3 hover-primary" onclick="showPage('signup')"> Sign Up</a>
+                    <a href="#payment" class="text-secondary text-decoration-none me-3 hover-primary" onclick="showPage('payment')"> Payment</a>
+                    <a href="#survey" class="text-secondary text-decoration-none hover-primary" onclick="showPage('survey')"> Survey</a>
+                </nav>
+                <a href="#booking" class="d-md-none btn btn-primary shadow-sm" onclick="showPage('home')">Book Now</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        
+        <!-- ==================================================================================== -->
+        <!-- 1. HOMEPAGE (Contains Hero, Features, Testimonials, Why Choose Us, and Form 2) -->
+        <!-- ==================================================================================== -->
+        <section id="page-home" class="content-page active">
+            
+            <!-- 1.1 Hero Section -->
+            <div class="text-center py-5 bg-white rounded-3 shadow-lg mb-4">
+                <h2 class="display-5 fw-bolder text-dark mb-3">Your Local Repair Experts</h2>
+                <p class="lead text-secondary mb-4">Fast, reliable, and professional handyman services in your neighborhood. Get a quote and book instantly!</p>
+                <a href="#booking" class="btn btn-primary btn-lg rounded-pill shadow-sm">Request a Service Today &rarr;</a>
+            </div>
+
+            <!-- 1.2 Features/Services Overview -->
+            <div class="my-5">
+                <h3 class="h3 fw-bold text-center text-dark mb-4 border-bottom pb-2">Our Core Services</h3>
+                <div class="row g-4">
+                    <!-- Feature 1 -->
+                    <div class="col-md-4">
+                        <div class="card shadow-sm p-4 h-100 rounded-3 border-0">
+                            <div class="text-primary fs-3 mb-3">🛠️</div>
+                            <h4 class="h5 fw-semibold text-dark mb-2">Plumbing & Leaks</h4>
+                            <p class="card-text text-secondary">Fixing faucets, unclogging drains, and repairing water heaters quickly.</p>
+                        </div>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="col-md-4">
+                        <div class="card shadow-sm p-4 h-100 rounded-3 border-0">
+                            <div class="text-primary fs-3 mb-3">💡</div>
+                            <h4 class="h5 fw-semibold text-dark mb-2">Electrical Wiring</h4>
+                            <p class="card-text text-secondary">Installing light fixtures, switches, outlets, and minor wiring repairs.</p>
+                        </div>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="col-md-4">
+                        <div class="card shadow-sm p-4 h-100 rounded-3 border-0">
+                            <div class="text-primary fs-3 mb-3">🔨</div>
+                            <h4 class="h5 fw-semibold text-dark mb-2">Carpentry & Assembly</h4>
+                            <p class="card-text text-secondary">Furniture assembly, minor frame repairs, and wall mounting services.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.3 Testimonials/Trust Section (NEW) -->
+            <div class="my-5 py-3 bg-light rounded-3 shadow-sm">
+                <h3 class="h3 fw-bold text-center text-dark mb-5 border-bottom pb-2">What Our Customers Say</h3>
+                <div class="row g-4 justify-content-center px-3">
+                    <!-- Testimonial 1 -->
+                    <div class="col-md-5">
+                        <div class="card p-4 h-100 rounded-3 border-0">
+                            <p class="fst-italic text-dark">"FixItPro fixed my leaky pipe in under an hour. The technician was polite and incredibly efficient. Highly recommend their plumbing service!"</p>
+                            <footer class="blockquote-footer mt-2">
+                                Anita S. in Andheri East
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="col-md-5">
+                        <div class="card p-4 h-100 rounded-3 border-0">
+                            <p class="fst-italic text-dark">"Booking online was so easy, and the electrician who came was professional and tidy. Finally, my ceiling fan is installed perfectly."</p>
+                            <footer class="blockquote-footer mt-2">
+                                Rahul K. in Lower Parel
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.4 Why Choose Us Section (NEW) -->
+            <div class="my-5 pt-3">
+                <h3 class="h3 fw-bold text-center text-dark mb-4 border-bottom pb-2">Why Choose FixItPro?</h3>
+                <div class="row g-4 text-center">
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <div class="text-primary fs-2 mb-2">⏱️</div>
+                            <h4 class="h6 fw-semibold">Guaranteed Punctuality</h4>
+                            <p class="text-secondary small">We respect your time. Our technicians arrive when they say they will.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <div class="text-primary fs-2 mb-2">🛡️</div>
+                            <h4 class="h6 fw-semibold">Insured & Verified</h4>
+                            <p class="text-secondary small">All our handymen are background-checked and fully insured for your peace of mind.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3">
+                            <div class="text-primary fs-2 mb-2"> transparent</div>
+                            <h4 class="h6 fw-semibold">Upfront Pricing</h4>
+                            <p class="text-secondary small">No hidden costs or surprise fees. Get a clear quote before any work begins.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1.5 Form 2: Detailed Service Request (Primary Booking) -->
+            <div id="booking" class="my-5 pt-3">
+                <h3 class="h4 fw-bold text-dark mb-4 border-bottom pb-2">2. Detailed Service Request (Primary Booking Form)</h3>
+                <div class="card shadow-lg p-4 rounded-3 border-0">
+                    <form id="form2" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="service-type" class="form-label">Service Type</label>
+                            <select id="service-type" name="serviceType" required class="form-select">
+                                <option value="">Select a service...</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="electrical">Electrical</option>
+                                <option value="carpentry">Carpentry</option>
+                                <option value="general">General Repair</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="preferred-date" class="form-label">Preferred Date & Time</label>
+                            <input type="datetime-local" id="preferred-date" name="preferredDate" required class="form-control">
+                        </div>
+                        <div class="col-12">
+                            <label for="address" class="form-label">Service Address</label>
+                            <textarea id="address" name="address" rows="2" required class="form-control" placeholder="Street, City, Zip Code"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required class="form-control" placeholder="e.g., 9876543210" pattern="[0-9]{10}">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 shadow-sm">Submit Booking Request</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ==================================================================================== -->
+        <!-- 2. SIGN UP PAGE (Contains Form 3) -->
+        <!-- ==================================================================================== -->
+        <section id="page-signup" class="content-page">
+            <h2 class="display-6 fw-bold text-dark mb-4 border-bottom pb-2">3. New Customer Sign-Up</h2>
+            <div class="card shadow-lg p-4 rounded-3 border-0 mx-auto" style="max-width: 500px;">
+                <p class="text-secondary text-center mb-4">Create an account for faster booking and service history tracking.</p>
+                <form id="form3" class="row g-3">
+                    <div class="col-12">
+                        <label for="signup-email" class="form-label">Email Address</label>
+                        <input type="email" id="signup-email" name="signupEmail" required class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label for="signup-password" class="form-label">Password</label>
+                        <input type="password" id="signup-password" name="signupPassword" required class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <label for="confirm-password" class="form-label">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirmPassword" required class="form-control">
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input id="terms-conditions" name="termsConditions" type="checkbox" required class="form-check-input">
+                            <label for="terms-conditions" class="form-check-label">
+                                I agree to the <a href="#" class="text-primary text-decoration-none">Terms & Conditions</a>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100 shadow-sm">Create Account</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================================================================================== -->
+        <!-- 3. PAYMENT PAGE (Contains Form 4) -->
+        <!-- ==================================================================================== -->
+        <section id="page-payment" class="content-page">
+            <h2 class="display-6 fw-bold text-dark mb-4 border-bottom pb-2">4. Secure Payment Information</h2>
+            <div class="card shadow-lg p-4 rounded-3 border-0 mx-auto" style="max-width: 500px;">
+                <p class="text-secondary text-center mb-4">This is a secure mock payment form. </p>
+                <form id="form4" class="row g-3">
+                    <div class="col-12">
+                        <label for="card-name" class="form-label">Name on Card</label>
+                        <input type="text" id="card-name" name="cardName" required class="form-control" placeholder="John Doe">
+                    </div>
+                    <div class="col-12">
+                        <label for="card-number" class="form-label">Card Number</label>
+                        <input type="text" id="card-number" name="cardNumber" required pattern="[0-9]{13,16}" title="Card number must be 13 to 16 digits" class="form-control" placeholder="**** **** **** 1234">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="expiry-date" class="form-label">Expiration (MM/YY)</label>
+                        <input type="month" id="expiry-date" name="expiryDate" required class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="coupon-code" class="form-label">Coupon Code (Optional)</label>
+                        <input type="text" id="coupon-code" name="couponCode" class="form-control" placeholder="SAVE10">
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100 shadow-sm">Process Mock Payment</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================================================================================== -->
+        <!-- 4. SURVEY PAGE (Contains Form 5) -->
+        <!-- ==================================================================================== -->
+        <section id="page-survey" class="content-page">
+            <h2 class="display-6 fw-bold text-dark mb-4 border-bottom pb-2">5. Customer Satisfaction Survey</h2>
+            <div class="card shadow-lg p-4 rounded-3 border-0">
+                <p class="text-secondary text-center mb-4">Help us improve by rating your recent service experience.</p>
+                <form id="form5" class="row g-4">
+                    <div class="col-12">
+                        <label class="form-label d-block mb-2">Service Rating (1 = Poor, 5 = Excellent)</label>
+                        <div class="d-flex justify-content-between">
+                            <!-- Radio Buttons 1-5 -->
+                            <input type="radio" id="rating-1" name="serviceRating" value="1" required class="d-none">
+                            <label for="rating-1" class="flex-fill text-center rounded-3 py-2 rating-label me-2">1</label>
+
+                            <input type="radio" id="rating-2" name="serviceRating" value="2" required class="d-none">
+                            <label for="rating-2" class="flex-fill text-center rounded-3 py-2 rating-label me-2">2</label>
+
+                            <input type="radio" id="rating-3" name="serviceRating" value="3" required class="d-none">
+                            <label for="rating-3" class="flex-fill text-center rounded-3 py-2 rating-label me-2">3</label>
+
+                            <input type="radio" id="rating-4" name="serviceRating" value="4" required class="d-none">
+                            <label for="rating-4" class="flex-fill text-center rounded-3 py-2 rating-label me-2">4</label>
+
+                            <input type="radio" id="rating-5" name="serviceRating" value="5" required class="d-none">
+                            <label for="rating-5" class="flex-fill text-center rounded-3 py-2 rating-label">5</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="satisfied" class="form-label">Were you satisfied with the technician?</label>
+                        <select id="satisfied" name="satisfied" required class="form-select">
+                            <option value="">-- Select --</option>
+                            <option value="Yes">Yes, very satisfied</option>
+                            <option value="No">No, I have feedback</option>
+                            <option value="Neutral">Neutral</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label for="feedback" class="form-label">Any additional feedback or suggestions?</label>
+                        <textarea id="feedback" name="feedback" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary w-100 shadow-sm">Submit Survey</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer with Form 1: Quick Contact (Stays visible on all pages) -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Footer Column 1: Info -->
+                <div class="col-md-4">
+                    <h4 class="h5 fw-bold mb-3 text-primary">FixItPro</h4>
+                    <p class="text-secondary mb-1">&copy; 2025 FixItPro Services. All rights reserved.</p>
+                    <p class="text-secondary mb-0">Serving Mumbai and surrounding areas.</p>
+                </div>
+
+                <!-- Footer Column 2: Quick Links -->
+                <div class="col-md-4">
+                    <h4 class="h5 fw-semibold mb-3">Quick Links</h4>
+                    <ul class="list-unstyled space-y-2 text-secondary">
+                        <li><a href="#booking" class="text-white text-decoration-none hover-primary" onclick="showPage('home')">Book a Service</a></li>
+                        <li><a href="#signup" class="text-white text-decoration-none hover-primary" onclick="showPage('signup')">Create Account</a></li>
+                        <li><a href="#" class="text-white text-decoration-none hover-primary">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Footer Column 3: Form 1: Quick Contact Form -->
+                <div class="col-md-4">
+                    <h4 class="h5 fw-semibold mb-3">1. Quick Contact</h4>
+                    <form id="form1" class="row g-2">
+                        <div class="col-12">
+                            <input type="text" id="contact-name" name="contactName" required class="form-control bg-dark text-white border-secondary placeholder-secondary" placeholder="name">
+                        </div>
+                        <div class="col-12">
+                            <input type="email" id="contact-email" name="contactEmail" required class="form-control bg-dark text-white border-secondary placeholder-secondary" placeholder="email">
+                        </div>
+                        <div class="col-12">
+                            <textarea id="contact-message" name="contactMessage" rows="2" required class="form-control bg-dark text-white border-secondary placeholder-secondary" placeholder="message"></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 shadow-sm">Send Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // --- CLIENT-SIDE ROUTING LOGIC ---
+        const pageIds = ['home', 'signup', 'payment', 'survey'];
+        const contentPages = document.querySelectorAll('.content-page');
+
+        function showPage(pageId) {
+            // Check if the requested ID is valid
+            if (!pageIds.includes(pageId)) {
+                pageId = 'home'; // Default to home if invalid
+            }
+
+            // 1. Hide all pages
+            contentPages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // 2. Show the requested page
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // 3. Update URL hash (for back button/refresh support)
+            window.location.hash = pageId;
+
+            // 4. Scroll to top of main content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Initialize page based on URL hash or default to home
+        window.onload = function() {
+            const initialHash = window.location.hash.substring(1) || 'home';
+            showPage(initialHash);
+        };
+
+        // Handle browser back/forward buttons
+        window.onhashchange = function() {
+            const newHash = window.location.hash.substring(1) || 'home';
+            showPage(newHash);
+        };
+
+        // --- FORM SUBMISSION LOGIC ---
+        function showSuccessMessage() {
+            const messageElement = document.getElementById('success-message');
+            messageElement.classList.remove('d-none');
+            
+            setTimeout(() => {
+                messageElement.style.opacity = '1';
+            }, 10); 
+
+            setTimeout(() => {
+                messageElement.style.opacity = '0';
+                setTimeout(() => {
+                    messageElement.classList.add('d-none');
+                }, 300);
+            }, 3000);
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault(); 
+            const form = event.target;
+            const formId = form.id;
+            
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            console.log(`--- Form Submission (${formId}) ---`);
+            console.log(data);
+            console.log("-----------------------------------");
+            
+            form.reset();
+            showSuccessMessage();
+
+            // Optional: After submitting secondary forms, redirect back to home
+            if (formId !== 'form2' && formId !== 'form1') {
+                 // showPage('home'); // You can uncomment this if you want an instant redirect
+            }
+        }
+
+        // Attach the universal handler to all five forms
+        document.getElementById('form1').addEventListener('submit', handleFormSubmit);
+        document.getElementById('form2').addEventListener('submit', handleFormSubmit);
+        document.getElementById('form3').addEventListener('submit', handleFormSubmit);
+        document.getElementById('form4').addEventListener('submit', handleFormSubmit);
+        document.getElementById('form5').addEventListener('submit', handleFormSubmit);
+    </script>
+</body>
+</html>
